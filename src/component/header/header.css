@@ -1,0 +1,4 @@
+/* Show the dropdown menu when hovering over the dropdown container */
+.dropdown:hover > .dropdown-menu{
+    display: block;
+}
