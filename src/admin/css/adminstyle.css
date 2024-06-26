@@ -1,0 +1,9 @@
+.custom-min-vh-100 {
+    min-height: 100vh !important;
+}
+
+@media (max-width: 991px) {
+    .custom-min-vh-100 {
+        min-height: auto !important;
+    }
+}

@@ -3,6 +3,7 @@ import logo  from '../../images/Logo.png';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
 import './header.css';
+import { NavLink } from 'react-router-dom';
 
 const Header = () => {
     return(
@@ -40,18 +41,18 @@ const Header = () => {
                 {/* Login and cart icons */}
                 <div className='col-lg-6 py-3 m-0 d-flex justify-content-evenly align-items-center'>
                     <div className='nav-item w-25 text-center'>
-                        <a id='loginpage' className='nav-link bg-warning fw-bold rounded-3 fs-5 p-2' href='/'
-                            >Login</a>
+                        <NavLink id='loginpage' className='nav-link bg-warning fw-bold rounded-3 fs-5 p-2' to='/login'
+                            >Login</NavLink>
                     </div>
                     <div className='nav-item text-center'>
-                        <a id='cartpage' href='/' className='nav-link text-warning fs-2'>
+                        <NavLink id='cartpage' to='/cart' className='nav-link text-warning fs-2'>
                             <FontAwesomeIcon className='cart' icon={faCartShopping}/>
-                        </a>       
+                        </NavLink>       
                             
                     </div>
                     <div className='nav-item w-25 text-center'>
-                        <a id='loginpage' className='nav-link bg-warning fw-bold rounded-3 fs-5 p-2' href='/'
-                            >Admin</a>
+                        <NavLink id='adminpage' to='/admin/dashboard' className='nav-link bg-warning fw-bold rounded-3 fs-5 p-2'
+                            >Admin</NavLink>
                     </div>
                 </div>
             </div>
@@ -216,9 +217,9 @@ const Header = () => {
 
             {/* Contact link */}
             <li className='nav-item mx-1'>
-                <a id='contactpage' 
+                <NavLink id='contactpage' 
                     className='nav-link py-1 text-black fs-5 fw-bold'
-                    href="/">Contact</a>
+                    to="/contactus">Contact</NavLink>
             </li>
         </nav>
         </>
