@@ -11,6 +11,7 @@ import Cart from './pages/cart';
 import Orders from './admin/pages/order';
 import Customers from './admin/pages/customers';
 import Products from './admin/pages/products';
+import Adminlogin from './admin/pages/login';
 
 
 
@@ -30,9 +31,9 @@ function App() {
         <Route path='/admin/dashboard' element={<Dashboard />} />
         <Route path='/admin/orders' element={<Orders />} />
         <Route path='/admin/customers' element={<Customers />} />
-        <Route path='/admin/products' element={<Products />} />
-        <Route path='/admin/login' element={<Login />} />
+        <Route path='/admin/products' element={<Products />} />        
       </Route>
+      <Route path='/admin/login' element={<Adminlogin />} />
     </Routes>
     
     </>
