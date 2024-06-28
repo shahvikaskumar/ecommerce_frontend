@@ -1,12 +1,15 @@
-import { NavLink} from 'react-router-dom';
+import { NavLink, useNavigate} from 'react-router-dom';
 import logo from '../../images/Logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCubes,  faHome, faRightFromBracket, faShoppingBasket, faUser } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../redux/slice/authslice';
+import { showtoast } from '../../redux/slice/toastslice';
 
  
 const Navbar = () => {
-
-
+    const dispatch = useDispatch();
+    const navigate= useNavigate();
 
     
     return (
@@ -57,7 +60,7 @@ const Navbar = () => {
                         </li>
 
                         <li className="nav-item mx-2 mb-2">
-                            <NavLink className="nav-link fs-4"  activeclassname="active-link" to="/admin/products">
+                            <NavLink className="nav-link fs-4" onClick={() => dispatch(logout(navigate, showtoast))}  activeclassname="active-link" to="/admin/login">
                             <FontAwesomeIcon className='me-4' icon={faRightFromBracket} />
                             Logout
                             </NavLink>

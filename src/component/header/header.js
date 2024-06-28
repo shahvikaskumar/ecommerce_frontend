@@ -1,11 +1,20 @@
 import React from 'react';
 import logo  from '../../images/Logo.png';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
+import {faCartShopping, faUser} from '@fortawesome/free-solid-svg-icons';
 import './header.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink , useNavigate} from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../redux/slice/authslice';
+import { showtoast } from "../../redux/slice/toastslice";
+
 
 const Header = () => {
+    const isauth = useSelector((state) => state.auth.isauth);
+    const user = useSelector((state) => state.auth.user);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    
     return(
         <>
         {/* Main navbar container */}
@@ -41,17 +50,36 @@ const Header = () => {
                 {/* Login and cart icons */}
                 <div className='col-lg-6 py-3 m-0 d-flex justify-content-evenly align-items-center'>
                     <div className='nav-item w-25 text-center'>
-                        <NavLink id='loginpage' className='nav-link bg-warning fw-bold rounded-3 fs-5 p-2' to='/login'
+                        {isauth ? (
+                        <div className="btn-group w-100">
+                        <button type="button" className="btn text-truncate btn-warning dropdown-toggle fw-bold" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <FontAwesomeIcon className='me-3' icon={faUser} />
+                          {user.name}
+                        </button>
+                        <div className="dropdown-menu">
+                          <NavLink className="dropdown-item bg-white text-black" href="#">Profile</NavLink>
+                          <NavLink className="dropdown-item bg-white text-black" href="#">Orders</NavLink>
+                          <NavLink className="dropdown-item bg-white text-black" onClick={() => dispatch(logout(navigate, showtoast)) }>Logout</NavLink>
+                          
+                        </div>
+                      </div>
+                        ) : (
+                            <NavLink id='loginpage' className='nav-link bg-warning fw-bold rounded-3 fs-5 p-2' to='/login'
                             >Login</NavLink>
+                        )}
+
+
+                        
+
                     </div>
                     <div className='nav-item text-center'>
-                        <NavLink id='cartpage' to='/cart' className='nav-link text-warning fs-2'>
-                            <FontAwesomeIcon className='cart' icon={faCartShopping}/>
+                        <NavLink id='cartpage' to='/cart' className='nav-link text-warning fs-3' >
+                            <FontAwesomeIcon className='cart ' icon={faCartShopping}/>
                         </NavLink>       
                             
                     </div>
                     <div className='nav-item w-25 text-center'>
-                        <NavLink id='adminpage' to='/admin/dashboard' className='nav-link bg-warning fw-bold rounded-3 fs-5 p-2'
+                        <NavLink id='adminpage' to='/admin' className='nav-link bg-warning fw-bold rounded-3  p-2'
                             >Admin</NavLink>
                     </div>
                 </div>
