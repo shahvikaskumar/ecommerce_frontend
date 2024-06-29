@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
 import { Base_URL } from "../../utility/config";
 
+
 const initialState = {
     token:null,
     isauth:false,
@@ -108,7 +109,7 @@ export const login = (data, navigate, showtoast) => async (dispatch) =>{
         localStorage.setItem('token',response.data.token);        
         dispatch(setauth({token:response.data.token,user:response.data.user}));       
         dispatch(showtoast({message:response.data.success,type:"success"}));
-        if(response.data.user['usertype'] === 'admin'){
+        if(response.data.user['usertype'] === 'admin'){            
             navigate('/admin');
         }else{
             navigate('/');
@@ -135,6 +136,40 @@ export const logout = (navigate, showtoast) => async (dispatch) => {
     catch(error){
         dispatch(seterror(error.message));
         dispatch(showtoast({message:'Logout Unsuccessfully.',type:'error'}));
+    }
+};
+
+export const forgotpassword = (data,navigate, showtoast) => async (dispatch) => {
+    try{
+        dispatch(setloading(true));
+        const response = await axios.post(`${Base_URL}auth/forgotpassword`,data);
+        dispatch(showtoast({message:response.data.success, type:"success"}));
+        navigate('/login');  
+    }
+    catch(error){
+        dispatch(seterror(error.message));
+        dispatch(showtoast({message:error.response?.data?.error || 'An error occures',type:'error'}));
+    }
+    finally{
+        dispatch(setloading(false));
+    }
+
+};
+
+export const Resetpassword = (data, navigate, showtoast) => async  (dispatch) => {
+
+    try{
+        dispatch(setloading(true));
+        const response = await axios.post(`${Base_URL}auth/resetpassword`,data);
+        dispatch(showtoast({message:response.data.success, type:'success'}));
+        navigate('/login');
+    }
+    catch(error){
+        dispatch(seterror(error.message));
+        dispatch(showtoast({message:error.response?.data?.error || 'An error occures',type:'error'}));
+    }
+    finally{
+        dispatch(setloading(false));
     }
 };
 

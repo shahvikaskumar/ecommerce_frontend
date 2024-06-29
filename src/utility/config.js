@@ -1,5 +1,4 @@
-require('dotenv').config();
 
 module.exports = {
-    Base_URL:process.env.Base_URL, 
+    Base_URL:process.env.REACT_APP_API_URL, 
 }

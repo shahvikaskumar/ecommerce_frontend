@@ -2,10 +2,10 @@ import './App.css';
 import { Routes , Route, Navigate } from 'react-router-dom';
 import Dashboard from './admin/pages/dashboard';
 import Layout from './utility/layout';
-import Login from './pages/login';
+import Login from './pages/auth/login';
 import AdminLayout from './utility/adminlayout';
 import Contactus from './pages/contactus';
-import Register from './pages/register';
+import Register from './pages/auth/register';
 import Home from './pages/home';
 import Cart from './pages/cart';
 import Orders from './admin/pages/order';
@@ -14,6 +14,9 @@ import Products from './admin/pages/products';
 import { useSelector } from 'react-redux';
 import Loading from './component/loading/loading';
 import { AdminProtectedRoute } from './utility/protectedroute';
+import Forgotpassword from './pages/auth/forgotpassword';
+import Resetpasswordform from './pages/auth/resetpassword';
+import Verifyemailform from './pages/auth/verifyemail';
 
 
 function App() {
@@ -38,6 +41,9 @@ function App() {
         <Route path='/login' element={!isauth ? <Login formname="Login" register="true" /> : <Navigate to="/" /> } />
         <Route path='/contactus' element={<Contactus/>} />
         <Route path='/cart' element={<Cart /> } />
+        <Route path='/forgotpassword' element={!isauth ? <Forgotpassword /> : <Navigate to="/" /> } />
+        <Route path='/resetpassword/:token' element={!isauth ? <Resetpasswordform/> : <Navigate to="/" /> } />
+        <Route path='/verifyemail' element={!isauth ? <Verifyemailform/> : <Navigate to="/" /> } />
       </Route>
       <Route path='/admin' element={ <AdminProtectedRoute> <AdminLayout /> </AdminProtectedRoute> } >
         <Route path='/admin/dashboard' element={ <AdminProtectedRoute> <Dashboard /> </AdminProtectedRoute> } />

@@ -1,9 +1,9 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState} from 'react';
-import { register } from "../redux/slice/authslice";
+import { register } from "../../redux/slice/authslice";
 import {useSelector, useDispatch} from 'react-redux';
-import { showtoast } from "../redux/slice/toastslice";
-import Loading from "../component/loading/loading";
+import { showtoast } from "../../redux/slice/toastslice";
+import Loading from "../../component/loading/loading";
 
 
 
