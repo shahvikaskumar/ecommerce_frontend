@@ -26,14 +26,13 @@ const Register = () => {
     };
 
     const handlesubmit = async (e) => {
-        e.preventDefault();         
+        e.preventDefault();  
         
         const data = {
             ...formdata,
-            utype:'cus'
+            utype:'cus',
 
-        };
-
+        };        
         dispatch(register(data, navigate, showtoast ));        
     };
 
