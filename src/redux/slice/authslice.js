@@ -85,10 +85,7 @@ export const register = (data , navigate, showtoast) => async (dispatch) => {
     
     try{
         dispatch(setloading(true));
-        const response = await axios.post(`${Base_URL}auth/register`,data);
-        
-        localStorage.setItem('token',response.data.token);
-        dispatch(setauth({token:response.data.token, user:response.data.user}));
+        const response = await axios.post(`${Base_URL}auth/register`,data);      
         dispatch(showtoast({message:response.data.success,type:'success'}));
         navigate('/')
     }

@@ -54,7 +54,7 @@ const Header = () => {
                         <div className="btn-group w-100">
                         <button type="button" className="btn text-truncate btn-warning dropdown-toggle fw-bold" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <FontAwesomeIcon className='me-3' icon={faUser} />
-                          {user?.name}
+                          {user.name}
                         </button>
                         <div className="dropdown-menu">
                           <NavLink className="dropdown-item bg-white text-black" href="#">Profile</NavLink>
