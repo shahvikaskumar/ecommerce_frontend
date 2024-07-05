@@ -24,7 +24,7 @@ const Navbar = () => {
 
                 <NavLink className='navbar-brand text-center col-10 col-sm-11 fs-2 fw-bold me-0' activeclassname= 'active-link' to="/admin">
                     <img src={logo}  className='img-fluid' alt='logo'/>
-                </NavLink>
+                </NavLink> 
             </div>
 
             
@@ -67,10 +67,8 @@ const Navbar = () => {
                         </li>
                         </ul>
                     </div>                
-        </nav>
-
-        
-</>
+        </nav>        
+        </>
     )
 };
 

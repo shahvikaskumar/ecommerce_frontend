@@ -1,10 +1,11 @@
-import { Outlet } from "react-router-dom";
-import Navbar from "../admin/component/navbar";
-import '../admin/css/adminstyle.css';
+import { Outlet} from "react-router-dom";
+import Navbar from './component/navbar';
+import './css/adminstyle.css';
 
-
-const AdminLayout = () => {
+const AdminMenu = () => {
+    
     return(
+        
         <>
         <div className="row m-0">
             <div className="col-12  col-lg-3 col-xl-2  p-0">
@@ -13,12 +14,12 @@ const AdminLayout = () => {
             <div className="col-12 col-lg-9 col-xl-10 p-0">
         <   Outlet />
         </div>
-        </div>
-        
-            
+        </div>       
             
         </>
+        
+        
     )
 };
 
-export default AdminLayout;
+export default AdminMenu;
