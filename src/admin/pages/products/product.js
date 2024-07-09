@@ -13,15 +13,34 @@ export const Products = () => {
   const { products , loading } = useSelector((state) => state.product);
   const [filproduct, setfillproduct] = useState([]);
   const {token} = useSelector((state) => state.auth);
+  const [editproduct, seteditproduct] = useState(null);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(Getallproduct());    
-  },[dispatch]);
+  const handleedit = (product) => {
+    seteditproduct(product); 
+    dispatch(setmodalshow(true));
+  };
+
+  const handlecreate = () => {
+    seteditproduct(null);
+    dispatch(setmodalshow(true));
+  };
+
   
 useEffect(() => {
+  const lowercasedSearch = search.toLowerCase();
+
   const result = products.filter((product) => {
-      return product.pname.toLowerCase().match(search.toLowerCase());
+      return (
+        product.pname.toLowerCase().match(lowercasedSearch) ||
+        product.price.toLowerCase().includes(lowercasedSearch) ||
+        product.cate.toLowerCase().includes(lowercasedSearch) ||
+        product.brand.toLowerCase().includes(lowercasedSearch) ||
+        product.subcate.toLowerCase().includes(lowercasedSearch)
+        
+
+      );
+
   });
 
   setfillproduct(result);
@@ -45,7 +64,7 @@ const handledelete = (product) => {
       name:"Image",
       selector:(row) => (
         <img className='my-2' 
-        src={row.image} 
+        src={row.imageurl} 
         alt={row.pname} 
         style={{ width: '80px', height: '100px', objectFit: 'cover' }}
       />
@@ -73,14 +92,20 @@ const handledelete = (product) => {
       sortable:true
     },
     {
-      name:"Featured",
+      name:"Featured Product",
       cell: (row) => (
         <input className='justify-content-center'
           type="checkbox" 
-          checked={row.featured} 
+          checked={row.pfeatured === "true"} 
           readOnly 
         />
       ),
+      sortable: true
+    },
+
+    {
+      name:"Price",
+      selector: (row) => row.price ,
       sortable: true
     },
     
@@ -88,7 +113,7 @@ const handledelete = (product) => {
       name:"Action",
       cell:row => 
         <>
-        <button className='btn btn-primary mx-2' style={{minWidth:'80px'}} onClick={() => console.log(products)}>Edit</button>
+        <button className='btn btn-primary mx-2' style={{minWidth:'80px'}} onClick={() => handleedit(row)}>Edit</button>
         <button className='btn btn-danger mx-2' style={{minWidth:'80px'}} onClick={() => handledelete(row)}>Delete</button>
         </>
     },
@@ -98,7 +123,7 @@ const handledelete = (product) => {
   return (
     <>
       {loading && <Loading /> }         
-      <ProductCreate />
+      <ProductCreate product={editproduct}/> 
       <DataTable className='px-4 justify-content-center' title="Product List"
         columns={columns} 
         data={filproduct} 
@@ -111,7 +136,7 @@ const handledelete = (product) => {
         subHeader
         subHeaderComponent ={
          <div className='w-100 justify-content-between d-flex'>
-         <Button variant="primary" onClick={() => dispatch(setmodalshow(true))} >
+         <Button variant="primary" onClick={() => handlecreate()} >
             Create Product
           </Button>
           <input type='text'

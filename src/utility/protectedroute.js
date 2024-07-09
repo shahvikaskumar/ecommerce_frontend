@@ -16,15 +16,19 @@ export const ClientProtectedRoute = ({children}) => {
 };
 
 export const AdminProtectedRoute = ({children}) => {
-    
+
+    const isauth = useSelector((state) => state.auth.isauth);   
     const user = useSelector((state) => state.auth.user);
     
     // If user is not admin, navigate to the admin login page
-    if(user){
+    
+    if(isauth){
         if(user['usertype'] !== 'admin'){            
             return <Navigate to='/admin/login' />
          }        
-    };   
+    }else if(!isauth) {
+        return <Navigate to='/admin/login' />
+    }   
     
 
     // If user is authenticated, render the child components

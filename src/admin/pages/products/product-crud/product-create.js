@@ -1,20 +1,58 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
-import { Createproduct, setmodalshow } from '../../../../redux/slice/productslice';
+import { Createproduct, setmodalshow, Updateproduct } from '../../../../redux/slice/productslice';
 import { showtoast } from '../../../../redux/slice/toastslice';
 import Loading from '../../../../component/loading/loading';
 import {Button, Modal, Form, Col, Row} from 'react-bootstrap';
 
 
-const ProductCreate = () => {
-  const {token} = useSelector((state) => state.auth);
+const ProductCreate = (props) => {
+  const dispatch = useDispatch(); 
+  const {token} = useSelector((state) => state.auth);  
   const {loading, showmodal} = useSelector((state) => state.product);
-  const initialdata = { pname: '', cate: '', subcate: '', brand: '', pdesc: '', price: '', color: '', pspeci: '' };
+  const [edit, setedit] = useState(false);
+  const [pid, setpid] = useState(null);
+  const initialdata = {
+    pname: '',
+    cate: '',
+    subcate: '',
+    brand: '',
+    pdesc: '',
+    price: '',
+    color: '',
+    pspeci: '',
+  };
+
   const [formdata, setformdata] = useState(initialdata);
   const [imgpre, setimgpre] = useState(null);  
   const [pfeatured, setpfeatured] = useState(false);
-  const dispatch = useDispatch(); 
+
+  useEffect(() => {
+    if (props.product) {
+      setformdata({
+        pname: props.product.pname || '',
+        cate: props.product.cate || '',
+        subcate: props.product.subcate || '',
+        brand: props.product.brand || '',
+        pdesc: props.product.pdesc || '',
+        price: props.product.price || '',
+        color: props.product.color || '',
+        pspeci: props.product.pspeci || '',                
+      });
+      setimgpre(props.product.imageurl ? props.product.imageurl : null);
+      setpfeatured(props.product.pfeatured === "true" ? true : false);
+      setedit(true);
+      setpid(props.product._id);
+    } else {
+      setformdata(initialdata);
+      setimgpre(null);
+      setpfeatured(false);
+      setedit(false);
+      setpid('');
+    }
+    // eslint-disable-next-line
+  }, [props.product]);
 
 
   const categories = {
@@ -54,10 +92,20 @@ const ProductCreate = () => {
     }
 };
 
-const handlesumbit = async () => {    
+const handlesubmit = async () => {    
+
   const data = { ...formdata, pfeatured: pfeatured };
   
-  dispatch(Createproduct(data, token, showtoast,  handleclose ));
+  dispatch(Createproduct({data:data, token:token, showtoast:showtoast, modalclose:handleclose }));
+
+};
+
+
+const handleupdate = async () => {    
+    
+  const data = { ...formdata, pfeatured: pfeatured };
+  
+  dispatch(Updateproduct({data:data, pid:pid, token:token, showtoast:showtoast, modalclose:handleclose }));
 
 };
 
@@ -65,12 +113,13 @@ const handlesumbit = async () => {
     <>
       {loading && <Loading/>}
       <Modal  className='modal-xl'  scrollable show={showmodal} onHide={handleclose} centered>
+      
         <Modal.Header closeButton >
-          <Modal.Title className='flex-grow-1 text-center fw-bold'>Create Product</Modal.Title>
+          <Modal.Title className='flex-grow-1 text-center fw-bold'>{edit ? "Edit Product" : "Create Product"}</Modal.Title>
         </Modal.Header>      
         <Modal.Body>
-        <Form id="cpform">
-            <Row className="m-0 ">
+        <Form id="cpform">  
+            <Row className="m-0">
               <Col lg={4} xl={3} className="pe-xl-3">
                 <Form.Group className="my-2">
                   <Form.Group className='mb-3 d-flex justify-content-center'>
@@ -132,16 +181,23 @@ const handlesumbit = async () => {
                 </Form.Group>
               </Col>
             </Row>
-          </Form>
+            </Form>
         </Modal.Body>
           <Modal.Footer className='justify-content-center'>
-          <Button variant="primary" className='fs-5 px-5' onClick={handlesumbit}>
+           {edit ? ( 
+            <Button variant="primary" className='fs-5 px-5' onClick={handleupdate}>
+            Update
+          </Button>  
+           ) : ( 
+          <Button variant="primary" className='fs-5 px-5' onClick={handlesubmit}>
             Save
           </Button>
+          )}
           <Button variant="secondary" className='fs-5 px-5' onClick={handleclose}>
             Close
           </Button>          
         </Modal.Footer>
+        
       </Modal>
     
     </>

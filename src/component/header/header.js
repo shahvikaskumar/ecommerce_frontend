@@ -14,6 +14,7 @@ const Header = () => {
     const user = useSelector((state) => state.auth.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const {cartitem, countitem} = useSelector((state) => state.cart);
     
     return(
         <>
@@ -21,9 +22,9 @@ const Header = () => {
         <div className='navbar navbar-expand-lg navbar-dark bg-dark px-4 py-0'>
             {/* Logo and mobile menu toggle */}
             <div className='col-12 col-lg-3 py-2 d-flex justify-content-between align-items-center'>
-                <a className='navbar-brand' href='/'>
+                <NavLink className='navbar-brand' href='/'>
                     <img src={logo} className='img-fluid' alt='logo' />
-                </a>
+                </NavLink>
                 <button className='navbar-toggler'
                     type='button'
                     data-bs-toggle="collapse"
@@ -72,11 +73,15 @@ const Header = () => {
                         
 
                     </div>
-                    <div className='nav-item text-center'>
+                    <div className='nav-item text-center position-relative'>
                         <NavLink id='cartpage' to='/cart' className='nav-link text-warning fs-3' >
                             <FontAwesomeIcon className='cart ' icon={faCartShopping}/>
-                        </NavLink>       
-                            
+                        </NavLink>
+                        {countitem > 0 && (       
+                        <span className="badge bg-danger rounded-5 fs-6 position-absolute top-0 start-100 translate-middle">
+                        {countitem}
+                    </span>
+                    )}
                     </div>
                     <div className='nav-item w-25 text-center'>
                         <NavLink id='adminpage' to='/admin' className='nav-link bg-warning fw-bold rounded-3  p-2'
@@ -91,18 +96,18 @@ const Header = () => {
             
             {/* Home link */}
             <li className='nav-item mx-1'>
-                <a id='homepage'
+                <NavLink id='homepage'
                     className='nav-link py-1 text-black fs-5 fw-bold'
                     aria-current='page'
-                    href='/'>Home</a>
+                    to='/home'>Home</NavLink>
             </li>
             
             {/* All Product link */}
             <li className='nav-item mx-1'>
-                <a id='allproduct'
+                <NavLink id='allproduct'
                     className='nav-link py-1 text-black fs-5 fw-bold'
                     aria-current='page'
-                    href='/'>All Product</a>
+                    to='/product/allproduct'>All Product</NavLink>
             </li>
 
             {/* Women dropdown menu */}
@@ -114,18 +119,18 @@ const Header = () => {
 
                 <ul className='dropdown-menu fs-5 fw-bold'>
                     <li>
-                        <a 
+                        <NavLink 
                             className='dropdown-item' 
                             id="all_women" 
-                            href="/">All
-                        </a>
+                            to="/product/women/all">All
+                        </NavLink>
                     </li>
                     <li>
-                        <a 
+                        <NavLink 
                             className='dropdown-item' 
                             id="women_dresses" 
-                            href="/">Dresses
-                        </a>
+                            to="/product/women/dresses">Dresses
+                        </NavLink>
                     </li>
                     <li>
                         <a 

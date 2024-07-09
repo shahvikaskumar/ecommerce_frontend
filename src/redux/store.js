@@ -4,6 +4,10 @@ import userReducer from './slice/userslice';
 import toastReducer from './slice/toastslice';
 import authReducer from './slice/authslice';
 import productReducer from './slice/productslice';
+import cartReducer from './slice/cartslice';
+import { loadstate, savestate} from './middleware/cartmiddleware';
+
+const preloadedState= loadstate();
 
 const store = configureStore({
     reducer:{
@@ -11,11 +15,17 @@ const store = configureStore({
         toast: toastReducer,
         auth:authReducer,
         product:productReducer,
+        cart:cartReducer,
         
         
-    }
-    // middleware:(getDefaultMiddleware) => getDefaultMiddleware().concat(),
-    // devTools: process.env.NODE_ENV !== 'production',
+    },
+    preloadedState,
+});
+
+store.subscribe(() => {
+    savestate({
+        cart:store.getState().cart
+    });
 });
 
 export default store;
