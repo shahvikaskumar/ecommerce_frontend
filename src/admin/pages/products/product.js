@@ -3,7 +3,7 @@ import ProductCreate from './product-crud/product-create';
 import { useDispatch, useSelector } from 'react-redux';
 import DataTable from 'react-data-table-component';
 import {Button} from 'react-bootstrap';
-import { Deleteproduct, Getallproduct, setmodalshow } from '../../../redux/slice/productslice';
+import { Deleteproduct, setmodalshow } from '../../../redux/slice/productslice';
 import Loading from '../../../component/loading/loading';
 import { showtoast } from '../../../redux/slice/toastslice';
 
