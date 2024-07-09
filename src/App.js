@@ -19,7 +19,7 @@ import Resetpasswordform from './pages/auth/resetpassword';
 import Verifyemailform from './pages/auth/verifyemail';
 import { useEffect } from 'react';
 import { Getallproduct } from './redux/slice/productslice';
-import Women_Dresses from './pages/Product/women/dresses';
+import WomenDresses from './pages/Product/women/dresses';
 import ProductLayout from './pages/Product/productslayout';
 import Allproduct from './pages/Product/allproduct';
 import ProductDetail from './pages/Product/productdetail';
