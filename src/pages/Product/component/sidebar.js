@@ -1,4 +1,3 @@
-import { FormLabel, InputGroup } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { applyFilters, applySorting } from "../../../redux/slice/productslice";

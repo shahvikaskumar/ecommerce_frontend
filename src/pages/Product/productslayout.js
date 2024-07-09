@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./component/sidebar";
-import { useSelector } from "react-redux";
 import Pagination from "./component/pagination";
 
 const ProductLayout = () => {

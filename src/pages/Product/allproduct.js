@@ -1,13 +1,13 @@
 import { useSelector , useDispatch} from "react-redux";
 import Productcard from "./component/productcard";
-import { useEffect, useState} from "react";
-import { setCurrentPage, setpageproduct, setProducts, setProductsPerPage } from "../../redux/slice/productslice";
-import Pagination from "./component/pagination";
+import { useEffect} from "react";
+import { setProducts} from "../../redux/slice/productslice";
+
 
 
 
 const Allproduct = () => {
-    const {products, filterproducts, pageproduct} = useSelector((state) => state.product);    
+    const {products, pageproduct} = useSelector((state) => state.product);    
     const dispatch = useDispatch();
 
     useEffect(() => {        

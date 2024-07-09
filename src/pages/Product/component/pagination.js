@@ -21,21 +21,21 @@ const Pagination = () => {
     useEffect(() => {
         
         dispatch(setpageproduct(currentpageno));
-
-    },[productperpage, currentpage , filterproducts,]);
+        // eslint-disable-next-line
+    },[productperpage, currentpage , filterproducts, dispatch]);
 
     useEffect(() => {
         
         const currentpageside = sidefilter.slice(indexOfFirstProduct, indexOfLastProduct)
         dispatch(setpageproduct(currentpageside));
-
-    },[sidefilter]);
+        // eslint-disable-next-line
+    },[sidefilter, dispatch]);
 
     useEffect(() => {
 
         dispatch(setpageproduct(currentpageno));
-
-    },[]);
+        // eslint-disable-next-line
+    },[dispatch]);
 
 
     const paginate = (pageNumber) => dispatch(setCurrentPage(pageNumber));

@@ -44,7 +44,10 @@ const Home = () => {
                 case 3:
                 case 0:
                   product.classarray = ['d-none', 'd-lg-block', 'col-lg-3'];
-                  break;                
+                  break;
+                default:
+                    break;
+
               }
           
               return product;

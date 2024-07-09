@@ -4,7 +4,7 @@ import { useEffect} from "react";
 import { setProducts} from "../../../redux/slice/productslice";
 
 
-const Women_Dresses = () => {
+const WomenDresses = () => {
     const {products, pageproduct} = useSelector((state) => state.product);    
     const dispatch = useDispatch();
 
@@ -36,4 +36,4 @@ const Women_Dresses = () => {
 
 };
 
-export default Women_Dresses;
+export default WomenDresses;

@@ -55,7 +55,7 @@ useEffect(() => {
         <Route path='/contactus' element={<Contactus/>} />
         <Route path='/product' element={<ProductLayout />} >
           <Route path='/product/allproduct' element={<Allproduct />} />
-          <Route path='/product/women/dresses' element={<Women_Dresses />} />
+          <Route path='/product/women/dresses' element={<WomenDresses />} />
         </Route>
         <Route path='/productdetail/:id' element={ <ProductDetail product={singleproduct}/>} />
         <Route path='/cart' element={<Cart /> } />

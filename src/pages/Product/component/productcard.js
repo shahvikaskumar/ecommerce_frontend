@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setsingleproduct } from '../../../redux/slice/productslice';
 import { useNavigate } from 'react-router-dom';
-import { adjustqty, setadditem, setremoveitem } from '../../../redux/slice/cartslice';
+import { adjustqty, setadditem } from '../../../redux/slice/cartslice';
 
 const Productcard = (props) => {
     const [product, setproduct] = useState([]);

@@ -14,7 +14,7 @@ const Header = () => {
     const user = useSelector((state) => state.auth.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {cartitem, countitem} = useSelector((state) => state.cart);
+    const {countitem} = useSelector((state) => state.cart);
     
     return(
         <>
