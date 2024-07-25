@@ -128,9 +128,10 @@ export const login = (data, navigate, showtoast, prevpath) => async (dispatch) =
         
         if(response.data.user['usertype'] === 'admin'){            
             navigate('/admin');
-        }
+        }else {
 
-        navigate('/orderplace');
+        navigate('/');
+        }
         
         
     }

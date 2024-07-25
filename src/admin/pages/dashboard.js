@@ -48,9 +48,7 @@ const Dashboard = () => {
             tuser,
             morder,
             muser
-        }));
-        
-        console.log(torder);
+        }));       
 
     },[allusers, allorder])
 

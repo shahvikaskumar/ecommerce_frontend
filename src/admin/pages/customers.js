@@ -78,7 +78,7 @@ const Customers = () => {
 
         {
             name:"Address",
-            selector:(row) => row.address && row.address.length > 0 ? row.address[0] : 'N/A',
+            selector:(row) => row.address,
             sortable:true,
             width:"500px"
         }

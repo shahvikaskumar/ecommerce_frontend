@@ -17,7 +17,7 @@ const Adminlayout = () => {
         dispatch(Getallorder(token));       
         }
         
-    },[dispatch, token]);
+    },[token, dispatch]);
 
 
     return(

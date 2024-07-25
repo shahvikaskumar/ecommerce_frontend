@@ -42,12 +42,13 @@ export const AdminProtectedRoute = ({children}) => {
         dispatch(setloading(true));    
         if (!isauth) {
             setRedirectPath('/admin/login');
-        } else if (isauth && user['usertype'] !== 'admin') {
-            setRedirectPath('/admin/login');
+        }
+         else if (isauth && user['usertype'] !== 'admin') {
+            setRedirectPath('/admin/login');            
         }
 
         dispatch(setloading(false));
-    }, [isauth, user, dispatch]);
+    }, [dispatch, isauth, user]);
 
     if (loading) {        
         return <Loading />;

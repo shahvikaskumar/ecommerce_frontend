@@ -62,7 +62,7 @@ export const Getallorder = (token) => async(dispatch) => {
 
 export const Getuserorder = (token,uid) => async(dispatch) => {
     try{
-      dispatch(setloading(true));
+      
         const config = {
             headers:{                                  
               Authorization:`Bearer ${token}`
@@ -70,17 +70,12 @@ export const Getuserorder = (token,uid) => async(dispatch) => {
           };
 
          const response = await axios.get(`${Base_URL}/order/getorder/${uid}`,config);
-         dispatch(setgetorder(response.data.data)); 
-          
-          
-        
+         dispatch(setgetorder(response.data.data));      
 
     }catch(err){
         console.log(err);
     }
-    finally{
-      dispatch(setloading(false));
-    }
+    
 };
 
 const Createorder = (token, response, orderdata, showtoast, navigate) => async(dispatch) => {
