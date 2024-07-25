@@ -39,13 +39,13 @@ const Register = () => {
 
     return (
         <div id="container"
-            className="container-fluid p-4  my-5">
+            className="container-fluid px-3 py-4 ">
             {loading && <Loading /> }
             {/* Form container */}
             <form id='registerform' onSubmit={handlesubmit}>
                 {/* Form legend */}
                 <legend
-                    className="text-center display-4 fw-bold">Register</legend>
+                    className="text-center display-4 fw-bold">Registration</legend>
 
                 {/* Full Name input field */}
                 <div className="row pt-3 justify-content-center">

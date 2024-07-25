@@ -1,38 +1,62 @@
 import { Navigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import { setloading} from "../redux/slice/authslice";
+import Loading from "../component/loading/loading";
 
 
 export const ClientProtectedRoute = ({children}) => {
 
-    const isauth = useSelector((state) => state.auth.isauth);   
+    const dispatch = useDispatch();
+    const isauth = useSelector((state) => state.auth.isauth);
+    const {loading} = useSelector((state) => state.auth);    
+    const [redirectPath, setRedirectPath] = useState(null);
     
-    // If user is not authenticated, navigate to the login page
-    if(!isauth){
-        return <Navigate to='/login' />
+    useEffect(() => {
+        dispatch(setloading(true));    
+        if (!isauth) {
+            setRedirectPath('/login');
+        } 
+        dispatch(setloading(false));
+    }, [isauth, dispatch]);
+
+    if (loading) {        
+        return <Loading />;
     }
 
-    // If user is authenticated, render the child components
-    return children;
+    if (redirectPath) {
+        return <Navigate to={redirectPath} />;
+    }
+    return children;    
+    
 };
 
 export const AdminProtectedRoute = ({children}) => {
 
-    const isauth = useSelector((state) => state.auth.isauth);   
-    const user = useSelector((state) => state.auth.user);
+    const dispatch = useDispatch();
+    const isauth = useSelector((state) => state.auth.isauth);
+    const {user, loading} = useSelector((state) => state.auth);    
+    const [redirectPath, setRedirectPath] = useState(null);
     
-    // If user is not admin, navigate to the admin login page
-    
-    if(isauth){
-        if(user['usertype'] !== 'admin'){            
-            return <Navigate to='/admin/login' />
-         }        
-    }else if(!isauth) {
-        return <Navigate to='/admin/login' />
-    }   
-    
+    useEffect(() => {
+        dispatch(setloading(true));    
+        if (!isauth) {
+            setRedirectPath('/admin/login');
+        } else if (isauth && user['usertype'] !== 'admin') {
+            setRedirectPath('/admin/login');
+        }
 
-    // If user is authenticated, render the child components
-    return children
-        
+        dispatch(setloading(false));
+    }, [isauth, user, dispatch]);
+
+    if (loading) {        
+        return <Loading />;
+    }
+
+    if (redirectPath) {
+        return <Navigate to={redirectPath} />;
+    }
+
+    return children;    
     
 };

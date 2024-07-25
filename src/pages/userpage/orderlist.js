@@ -1,33 +1,45 @@
 import { useEffect,useState } from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {Getuserorder } from '../../redux/slice/orderslice';
 import Loading from '../../component/loading/loading';
 import DataTable from 'react-data-table-component';
+import { Container } from 'react-bootstrap';
 
 
-const Orders = () => {
+const Userorders = () => {
     
     const [search, setsearch] = useState('');
-    const {loading} = useSelector((state) => state.auth);
-    const {allorder} = useSelector((state) => state.order);
+    const dispatch = useDispatch();
+    const {token, loading, user} = useSelector((state) => state.auth);
+    const {userorder} = useSelector((state) => state.order);
     const [filuser, setfilluser] = useState([]);
+
     
-    // Filter orders based on search query
+    useEffect(() => {
+        if(user){
+        dispatch(Getuserorder(token, user._id));
+        }
+    },[dispatch, user, token]);
+
     useEffect(() => {       
-       console.log(allorder); 
+       console.log(userorder); 
         const lowercasedSearch = search.toLowerCase();
-        const result = allorder.filter((user) => {
-      return (
-        user.userid.name.toLowerCase().match(lowercasedSearch) ||
-        user.totalamount.toString().toLowerCase().includes(lowercasedSearch) ||
-        user.status.toLowerCase().match(lowercasedSearch) ||
-        user.paystatus.toLowerCase().includes(lowercasedSearch) 
+        const result = userorder.filter((user) => {
+            return (              
+              user.totalamount.toString().toLowerCase().includes(lowercasedSearch) ||
+              user.status.toLowerCase().match(lowercasedSearch) ||
+              user.paystatus.toLowerCase().includes(lowercasedSearch) 
+      
+            );
+      
+          });
+          setfilluser(result);
+      
+      
+    
+    
 
-      );
-
-    });
-    setfilluser(result);
-
-    },[allorder, search]);
+    },[userorder, search]);
 
 
 
@@ -40,9 +52,17 @@ const Orders = () => {
         },
 
         {
-            name: "Customer Name",
-            selector: (row) => row.userid.name,               
-        },
+            name:"Products Cost",
+            selector:(row) => row.totalcost,
+            sortable:true,          
+          },
+
+          {
+            name:"Shiping Cost",
+            selector:(row) => row.shipingcost,
+            sortable:true,          
+          },
+        
         
         {
           name:"Amount",
@@ -70,6 +90,7 @@ const Orders = () => {
     return(
         <>
         {loading && <Loading /> }                 
+        <Container>
         <DataTable className='px-4 justify-content-center' title="Order List"
           columns={columns} 
           data={filuser} 
@@ -89,8 +110,9 @@ const Orders = () => {
               onChange={(e) => setsearch(e.target.value)} />         
           }        
           />
+          </Container>
         </>
     )
 };
 
-export default Orders;
+export default Userorders;

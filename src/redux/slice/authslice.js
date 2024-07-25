@@ -1,7 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
 import { Base_URL } from "../../utility/config";
-
 
 const initialState = {
     token:null,
@@ -9,7 +8,8 @@ const initialState = {
     user:null,
     loading:false,
     mloader:false,
-    
+    allusers:[],
+    locationurl:'',    
 };
 
 const authslice = createSlice({
@@ -25,6 +25,9 @@ const authslice = createSlice({
             state.mloader = false;
             
 
+        },
+        setallusers(state,action){
+            state.allusers=action.payload;
         },
 
         clearauth(state) {
@@ -48,10 +51,26 @@ const authslice = createSlice({
             state.error = action.payload;
             state.loading = false;
         },
+
+        setlocationurl(state,action){
+            state.locationurl=action.payload;
+        },
+
+        setuserupdate(state,action){
+            state.user=action.payload;
+            const updateuser = action.payload;
+            const userindex = state.allusers.findIndex(user => user._id === updateuser._id);
+            if (userindex !== -1) {
+              state.allusers[userindex] = updateuser;            }
+        },
+
+        setclearlocationurl(state){
+            state.locationurl=null;
+        },
     },
 });
 
-export const verifytoken = (token , navigate) => async (dispatch) => {
+export const verifytoken = (token) => async (dispatch) => {
     
     try{
         dispatch(setmloader(true));
@@ -98,19 +117,21 @@ export const register = (data , navigate, showtoast) => async (dispatch) => {
     }
 };
 
-export const login = (data, navigate, showtoast) => async (dispatch) =>{
+export const login = (data, navigate, showtoast, prevpath) => async (dispatch) =>{
     
     try{
-        dispatch(setloading(true));
+        dispatch(setloading(true));        
         const response = await axios.post(`${Base_URL}auth/login`,data);  
         localStorage.setItem('token',response.data.token);        
-        dispatch(setauth({token:response.data.token,user:response.data.user}));       
+        dispatch(setauth({token:response.data.token,user:response.data.user}));               
         dispatch(showtoast({message:response.data.success,type:"success"}));
+        
         if(response.data.user['usertype'] === 'admin'){            
             navigate('/admin');
-        }else{
-            navigate('/');
         }
+
+        navigate('/orderplace');
+        
         
     }
     catch(error){
@@ -170,6 +191,56 @@ export const Resetpassword = (data, navigate, showtoast) => async  (dispatch) =>
     }
 };
 
-export const {setauth, clearauth, setloading, setmloader , seterror} = authslice.actions;
+export const Getalluser = (token) => async(dispatch) => {
+    try{
+        dispatch(setloading(true));
+        const config = {
+            headers:{      
+                Authorization:`Bearer ${token}`
+            }
+          };
+        const response = await axios.get(`${Base_URL}users/all`,config);
+        dispatch(setallusers(response.data.data));
+        
+    }
+    catch(error){
+        console.log(error);        
+    }
+    finally{
+        dispatch(setloading(false));
+    }
+};
+
+
+export const Updateprofile = createAsyncThunk('user/update', async({data, uid, token, showtoast},{dispatch}) => {
+    
+    try{
+        dispatch(setloading(true));        
+        const config = {
+            headers:{      
+              'Content-Type':'multipart/form-data',              
+              Authorization:`Bearer ${token}`
+            }
+          };
+          
+        const response = await axios.put(`${Base_URL}user/update/${uid}`,data, config);
+        dispatch(showtoast({message:response.data.success, type:'success'}));          
+        dispatch(setuserupdate(response.data.user));
+          
+    }
+    catch(err){
+        console.log(err.response.data);
+        dispatch(showtoast({message:err.response?.data?.error || 'An error occured', type:'error'}));
+        
+    }
+
+    finally{
+        dispatch(setloading(false));
+        
+    }
+
+});
+
+export const {setauth, setallusers, setuserupdate, setlocationurl,  clearauth, setloading, setmloader , seterror} = authslice.actions;
 
 export default authslice.reducer;

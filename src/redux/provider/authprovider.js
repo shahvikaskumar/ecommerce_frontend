@@ -1,23 +1,21 @@
 import React, { useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { verifytoken } from "../slice/authslice";
-import { useNavigate} from "react-router-dom";
 
 
 const AuthProvider = ({children}) => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const dispatch = useDispatch();    
       
     useEffect(() => {
              
         const token = localStorage.getItem('token');
         
         if(token){
-            dispatch(verifytoken(token, navigate));
+            dispatch(verifytoken(token));
         } 
         
         // eslint-disable-next-line
-    },[]);
+    },[dispatch]);
 
     return (
         <>

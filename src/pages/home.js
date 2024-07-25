@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-import logo  from '../images/Logo.png';
 import cover  from '../images/cover.jpg';
 import { useState, useEffect } from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -7,7 +6,8 @@ import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
 import Loading from '../component/loading/loading';
 
 const Home = () => {
-    const {products, loading} = useSelector((state) => state.product);
+    const {products} = useSelector((state) => state.product);
+    const {loading} = useSelector((state) => state.auth);
     const [fproduct, setfproduct] = useState([]);
     
     useEffect(() => {        
@@ -65,22 +65,13 @@ const Home = () => {
             {loading ? (<Loading />) : (<>
             <div id="container" className="container-fluid p-0">
                 <figure className="figure position-relative bg-black">
-                    <img src={cover} className="figure-img img-fluid object-fit-cover m-0 opacity-50" alt="cover" /> 
+                    <img src={cover} className="figure-img img-fluid object-fit-cover m-0" alt="cover" />
                 </figure>
-                <figcaption className="position-absolute top-50 start-50 translate-middle">
-                    <img src={logo} className="img-fluid object-fit-cover" alt="logo" />
-                    <p className="fs-4 fw-bold text-center text-warning">
-                        "Elegance
-                            Is
-                            Always In
-                            Style"
-                    </p>
-                </figcaption>
             </div>
 
             <div id="container-slide" className="container-fluid p-0">
-            <section className="my-5">
-                <h1 className="text-center mb-4">Featured Products</h1>
+            <section className="my-2">
+                <h1 className="text-center mb-2">Featured Products</h1>
                 <div id="carousel"
                     className="carousel slide pointer-event">
                         <div className="carousel-inner">
@@ -88,7 +79,7 @@ const Home = () => {
                             {/* Mapping over productchunks to create carousel items */}
                             {productchunks.map((chunk,index) => (
                                 <div key={index} className={`carousel-item ${index === 0 ? 'active':''}`}>
-                                    <div className="row mx-2" id="product">
+                                    <div className="row mx-0" id="product">
                                             
                                         {/* Mapping over each product chunk to create product cards */}
                                         {chunk.map(product => (

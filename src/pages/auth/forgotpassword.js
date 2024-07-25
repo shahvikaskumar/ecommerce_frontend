@@ -29,7 +29,7 @@ const Forgotpassword = () => {
 
     return (
         <div id="container"
-    className="container-fluid p-4  my-5">
+    className="container-fluid p-4">
     {loading && <Loading />}
     {/* Form container */}
     <form id='forgotpassword' onSubmit={handlesubmit}>

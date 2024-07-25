@@ -10,7 +10,7 @@ const cartslice = createSlice({
     initialState,
     reducers:{
         setclear(state,action){
-            state.cartitem = null;
+            state.cartitem = [];
             state.countitem = 0;
         },
 

@@ -1,8 +1,7 @@
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCartShopping, faMinus, faPlus} from '@fortawesome/free-solid-svg-icons';
+import {faCartShopping, faMinus, faPlus, faStar} from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setsingleproduct } from '../../../redux/slice/productslice';
 import { useNavigate } from 'react-router-dom';
 import { adjustqty, setadditem } from '../../../redux/slice/cartslice';
 
@@ -22,13 +21,11 @@ const Productcard = (props) => {
     },[props.product]);
 
     const goproductdetail = () => {
-        dispatch(setsingleproduct(product));
         navigate(`/productdetail/${product._id}`);
     };    
 
     const addtocart = () => {
-        dispatch(setadditem(product));
-        console.log(cartitem);
+        dispatch(setadditem(product));        
     }
 
     const handleincreaseqty = () => {
@@ -51,30 +48,34 @@ const Productcard = (props) => {
     return (
         <>
         
-        <div key={product._id} className="col-sm-6 col-xxl-3 px-xl-5 py-3 ">
+        <div key={product._id} className="col-6 col-md-4 col-xxl-3 px-xxl-5 py-3 ">
             <div className="card text-center">
-                <button className='border-0 bg-transparent p-0 mb-3' onClick={goproductdetail}>
-                <div className="h-50">
+                <button className='border-0 bg-transparent p-0 pb-2 ' onClick={goproductdetail}>
+                <div className="h-50 position-relative">
                     <img className="card-img-top img-fluid" src={product.imageurl} alt={product.pname} />
+                    {product.pcountrating > 0 && (
+                    <div className='position-absolute rounded-5 ms-5  bg-secondary start-0 bottom-0 translate-middle'>
+                    <p className="px-2 mb-0 py-1 fs-6">{product.pavgrating}  <FontAwesomeIcon className="text-warning" icon={faStar} /> <span className='me-1'>|</span>{product.pcountrating}</p>
+                    </div>
+                    )}
                 </div>
-                <div className="card-body mt-4">
-                    <h5 className="card-title fs-4 fw-bold">{product.pname}</h5>
-                    <h6 className="card-text fs-5 fw-bold">₹ {product.price}</h6>
-                    <p className="text-truncate">{product.pdesc}</p>
-
+                <div className="card-body mt-2">
+                    <h5 className="card-title text-truncate fs-4 fw-bold">{product.pname}</h5>
+                    <h6 className="card-text text-truncate fs-5 fw-bold">₹ {product.price}</h6>
+                    <p className="text-truncate mb-0">{product.pdesc}</p>
                 </div>
                 </button>
-                <div className='d-flex w-100 justify-content-center mb-4'>
+                <div className='d-flex w-100 justify-content-center mb-2'>
                 {!itemInCart ? (
                    
-                <button className="btn btn-warning fs-5 fw-bold rounded-4" onClick={addtocart}>
-                        <FontAwesomeIcon className='cart me-3' icon={faCartShopping}/>
+                <button className="btn text-truncate btn-warning fw-bold rounded-4" onClick={addtocart}>
+                        <FontAwesomeIcon className='cart me-2' icon={faCartShopping}/>
                         Add to Cart  
                 </button>
                 
                 ) : (
 
-                    <div className='w-50 d-flex'>
+                    <div className='w-50 d-flex justify-content-center'>
                     <button className="btn btn-warning px-3 me-2"
                                     onClick={handledecreaseqty}>
                                     <FontAwesomeIcon icon={faMinus} />

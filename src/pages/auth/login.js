@@ -4,11 +4,15 @@ import {useSelector, useDispatch} from 'react-redux';
 import Loading from "../../component/loading/loading";
 import { login } from "../../redux/slice/authslice";
 import { showtoast } from "../../redux/slice/toastslice";
+import { useLocation } from "react-router-dom";
 
 const Login = ({formname , register}) => {
-    const loading = useSelector((state) => state.auth.loading);
+    const {loading, locationurl} = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate(); 
+    
+    const location = useLocation();
+
     
     const [formdata, setformdata] = useState({
         email:'',
@@ -22,14 +26,17 @@ const Login = ({formname , register}) => {
     };
 
     const handlesubmit = async (e) => {
-        e.preventDefault();       
-        dispatch(login(formdata, navigate, showtoast ));        
+        
+        e.preventDefault();               
+        console.log(location.pathname);
+        const prevpath = location.pathname;
+        dispatch(login(formdata, navigate, showtoast, locationurl, prevpath ));        
     };
 
 
     return (
         <div id="container"
-    className="container-fluid p-4  my-5">
+    className="container-fluid px-3 py-4">
     {loading && <Loading />}
     {/* Form container */}
     <form id='loginform' onSubmit={handlesubmit}>

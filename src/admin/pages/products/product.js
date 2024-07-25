@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ProductCreate from './product-crud/product-create';
+import ProductCreate from './product-create';
 import { useDispatch, useSelector } from 'react-redux';
 import DataTable from 'react-data-table-component';
 import {Button} from 'react-bootstrap';
@@ -16,17 +16,19 @@ export const Products = () => {
   const [editproduct, seteditproduct] = useState(null);
   const dispatch = useDispatch();
 
+  // Show product edit modal
   const handleedit = (product) => {
     seteditproduct(product); 
     dispatch(setmodalshow(true));
   };
 
+  // Show product create modal
   const handlecreate = () => {
     seteditproduct(null);
     dispatch(setmodalshow(true));
   };
 
-  
+  // Filter products based on search input
 useEffect(() => {
   const lowercasedSearch = search.toLowerCase();
 
@@ -44,8 +46,9 @@ useEffect(() => {
   });
 
   setfillproduct(result);
-},[ products, search ]);
+},[products, search]);
 
+// Confirm and delete product
 const handledelete = (product) => {
   const confirmMessage = `Are you sure you want to delete the product "${product.pname}" with the following details?\n\n
                           Name: ${product.pname}\n
@@ -59,6 +62,7 @@ const handledelete = (product) => {
     
   };
 
+  // Define columns for DataTable
   const columns = [
     {
       name:"Image",

@@ -4,19 +4,19 @@ const Contactus = () => {
     return (
         <>
         {/* Container for the contact form */}
-<div id="container" className="container text-center my-4">
-    <h1>Contact Us</h1>
+<div id="container" className="container px-0 text-center my-4">
+    <h1 className='mb-0'>Contact Us</h1>
 
     {/* Row containing two columns: one for image and one for form */}
-    <div className="row my-4">
+    <div className="row mx-0 mt-4">
         {/* Column for the image */}
-        <div className="col-lg-6 py-4">
+        <div className="col-lg-6 pb-4">
             <img src={contactus}
                 className="img-fluid h-100 object-fit-fill"
                 alt="contactus" />
         </div>
         {/* Column for the form */}
-        <div className="col-lg-6 text-start py-4">
+        <div className="col-lg-6 text-start pb-4">
             {/* Form for contacting */}
             <form action="#" post="method">
 
@@ -25,7 +25,7 @@ const Contactus = () => {
                     className="row justify-content-lg-start justify-content-center">
                     <div className="col-12 col-md-10 col-lg-8">
                         <label className="form-label fs-5 px-3 fw-bold"
-                            for="name">Name
+                            htmlFor="name">Name
                             :-</label>
 
                         <input type="name" id="name" name="name"
@@ -39,7 +39,7 @@ const Contactus = () => {
                     className="row justify-content-lg-start justify-content-center py-4">
                     <div className="col-12 col-md-10 col-lg-8">
                         <label className="form-label fs-5 px-3 fw-bold"
-                            for="email">Email
+                            htmlFor="email">Email
                             :-</label>
 
                         <input type="email" id="email" name="email"
@@ -53,7 +53,7 @@ const Contactus = () => {
                     className="row justify-content-lg-start justify-content-center">
                     <div className="col-12 col-md-10 col-lg-8">
                         <label className="form-label fs-5 px-3 fw-bold"
-                            for="phoneno">Phone Number
+                            htmlFor="phoneno">Phone Number
                             :-</label>
 
                         <input type="tel" id="phoneno" name="phoneno"
@@ -67,7 +67,7 @@ const Contactus = () => {
                     className="row justify-content-lg-start justify-content-center py-4">
                     <div className="col-12 col-md-10 col-lg-8">
                         <label className="form-label fs-5 px-3 fw-bold"
-                            for="message">Message
+                            htmlFor="message">Message
                             :-</label>
 
                         <textarea type="message" id="message" name="message"

@@ -5,23 +5,26 @@ import { faCubes,  faHome, faRightFromBracket, faShoppingBasket, faUser } from '
 import { useDispatch } from 'react-redux';
 import { logout } from '../../redux/slice/authslice';
 import { showtoast } from '../../redux/slice/toastslice';
+import { setmenucanvas } from '../../redux/slice/headerslice';
+import Adminmenucanvas from './adminmenucanvas';
 
  
 const Navbar = () => {
     const dispatch = useDispatch();
     const navigate= useNavigate();
-
+    
+    // Show menu handler
+    const handlemenushow = () => dispatch(setmenucanvas(true));      
     
     return (
         <>
         <nav className='p-0  navbar navbar-expand-lg navbar-dark bg-dark flex-lg-column custom-min-vh-100'>
             <div className='container-fluid px-0 py-2'>
-            <button className="navbar-toggler col-2 col-sm-1 " type="button" 
-                data-bs-toggle="offcanvas" data-bs-target="#offcanvasbar" 
-                aria-controls="offcanvasbar" >
+            <button className="navbar-toggler col-2 col-sm-1 " type="button" onClick={handlemenushow} >
+                
                 <span className="navbar-toggler-icon"></span> 
                 </button>
-
+                <Adminmenucanvas />
                 <NavLink className='navbar-brand text-center col-10 col-sm-11 fs-2 fw-bold me-0' activeclassname= 'active-link' to="/admin">
                     <img src={logo}  className='img-fluid' alt='logo'/>
                 </NavLink> 

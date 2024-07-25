@@ -6,21 +6,28 @@ import { setProducts} from "../../redux/slice/productslice";
 
 
 
-const Allproduct = () => {
+
+const Product = (props) => {
     const {products, pageproduct} = useSelector((state) => state.product);    
     const dispatch = useDispatch();
-
+    
     useEffect(() => {        
       
+        
         const result = products.filter((product) => {
             return (
-              product.pfeatured === "false"    
+                product.pfeatured === "false" &&                 
+              (props.cate === "All" ||  product.cate === props.cate) &&
+              (props.subcate === "All" ||  product.subcate === props.subcate)   
             );     
         });
       
-        dispatch(setProducts(result));
+        dispatch(setProducts(result));               
         
-      },[products, dispatch]);     
+
+        // eslint-disable-next-line
+
+      },[products, dispatch, props.cate, props.subcate]);        
 
     
     return (
@@ -36,4 +43,4 @@ const Allproduct = () => {
 
 };
 
-export default Allproduct;
+export default Product;

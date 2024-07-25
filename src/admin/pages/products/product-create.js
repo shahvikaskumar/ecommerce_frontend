@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
-import { Createproduct, setmodalshow, Updateproduct } from '../../../../redux/slice/productslice';
-import { showtoast } from '../../../../redux/slice/toastslice';
-import Loading from '../../../../component/loading/loading';
+import { Createproduct, setmodalshow, Updateproduct } from '../../../redux/slice/productslice';
+import { showtoast } from '../../../redux/slice/toastslice';
+import Loading from '../../../component/loading/loading';
 import {Button, Modal, Form, Col, Row} from 'react-bootstrap';
 
 
@@ -55,12 +55,14 @@ const ProductCreate = (props) => {
   }, [props.product]);
 
 
+  // Product categories
   const categories = {
     Women: ['Dresses', 'Pants', 'Skirts','Gowns'],
     Men: ['Shirts', 'Pants', 'Trousers','Jeans'],
     Kids: ['Tops', 'Bottoms', 'One Pieces', 'Innerwears'],
   };  
 
+  // Close modal handler
   const handleclose = () => {
     setformdata(initialdata);
     setimgpre(null);
@@ -68,6 +70,7 @@ const ProductCreate = (props) => {
     dispatch(setmodalshow(false));
   };
 
+  // Handle form input changes
   const handlechange = (event) => {
     const { name, value, type, files } = event.target;
     
@@ -92,6 +95,7 @@ const ProductCreate = (props) => {
     }
 };
 
+// Submit new product
 const handlesubmit = async () => {    
 
   const data = { ...formdata, pfeatured: pfeatured };
@@ -100,7 +104,7 @@ const handlesubmit = async () => {
 
 };
 
-
+// Update existing product
 const handleupdate = async () => {    
     
   const data = { ...formdata, pfeatured: pfeatured };
