@@ -17,7 +17,7 @@ const AdminRoutes = () => {
   return (
     <Routes>
       <Route path='/' element={<AdminProtectedRoute><Adminlayout /></AdminProtectedRoute>}>
-      <Route path='/admin' element={<Navigate to='/admin/dashboard' />} />
+      <Route path='/' element={<Navigate to='/admin/dashboard' />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/orders' element={<Orders />} />
         <Route path='/customers' element={<Customers />} />

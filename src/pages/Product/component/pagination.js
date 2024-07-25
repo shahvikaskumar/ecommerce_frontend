@@ -15,7 +15,9 @@ const PaginationComponent = () => {
 
     useEffect(() => {
         dispatch(setpageproduct(currentpageno));
-    }, [productperpage, currentpage, filterproducts, sidefilter , dispatch, currentpageno]);
+
+        // eslint-disable-next-line
+    }, [productperpage, currentpage, filterproducts, sidefilter , dispatch]);
     
     const handlePageChange = (pageNumber) => {
         dispatch(setCurrentPage(pageNumber));

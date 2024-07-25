@@ -71,7 +71,7 @@ const Userprofile = (props) => {
 
 const handleupdate = async () => {       
    
-  console.log(formdata);
+  
   dispatch(Updateprofile({data:formdata, uid:uid, token:token, showtoast:showtoast }));
 
 };

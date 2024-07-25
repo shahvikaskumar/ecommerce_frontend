@@ -1,6 +1,5 @@
 import { useEffect,useState } from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {Getuserorder } from '../../redux/slice/orderslice';
+import { useSelector} from 'react-redux';
 import Loading from '../../component/loading/loading';
 import DataTable from 'react-data-table-component';
 import { Container } from 'react-bootstrap';
@@ -9,36 +8,28 @@ import { Container } from 'react-bootstrap';
 const Userorders = () => {
     
     const [search, setsearch] = useState('');
-    const dispatch = useDispatch();
-    const {token, loading, user} = useSelector((state) => state.auth);
+    
+    const { loading} = useSelector((state) => state.auth);
     const {userorder} = useSelector((state) => state.order);
     const [filuser, setfilluser] = useState([]);
 
     
-    useEffect(() => {
-        if(user){
-        dispatch(Getuserorder(token, user._id));
-        }
-    },[dispatch, user, token]);
+    
 
     useEffect(() => {       
-       console.log(userorder); 
+        
         const lowercasedSearch = search.toLowerCase();
         const result = userorder.filter((user) => {
             return (              
               user.totalamount.toString().toLowerCase().includes(lowercasedSearch) ||
               user.status.toLowerCase().match(lowercasedSearch) ||
-              user.paystatus.toLowerCase().includes(lowercasedSearch) 
-      
-            );
+              user.paystatus.toLowerCase().includes(lowercasedSearch)
+            )
+            
       
           });
           setfilluser(result);
-      
-      
-    
-    
-
+          
     },[userorder, search]);
 
 

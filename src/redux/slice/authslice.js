@@ -5,7 +5,7 @@ import { Base_URL } from "../../utility/config";
 const initialState = {
     token:null,
     isauth:false,
-    user:null,
+    user:'',
     loading:false,
     mloader:false,
     allusers:[],
